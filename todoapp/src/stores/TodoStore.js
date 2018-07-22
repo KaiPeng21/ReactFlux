@@ -64,7 +64,6 @@ class TodoStore extends EventEmitter{
 
     // DISPATCHER uses this to instruct the STORE to update the 'state' variables in the COMPONENTs
     handleActions(actions){
-        console.log(actions)
 
         switch (actions.type){
             case TodoConstant.CREATE_TODO:
