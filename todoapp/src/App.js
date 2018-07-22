@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
+
+// stores
+import TodoStore from './stores/TodoStore';
+
+// components
 import EnterField from './components/EnterField';
 import TodoList from './components/TodoList';
 
@@ -10,8 +15,16 @@ class App extends Component {
     super(props)
 
     this.state = {
-      todolist : [{id : 0, content : 'testing react', complete : true}, {id : 1, content : 'create stores', complete : false}]
+      todolist : TodoStore.getAll()
     }
+  }
+
+  componentDidMount(){
+    TodoStore.on("change", ()=>{
+      this.setState({
+        todolist : TodoStore.getAll()
+      })
+    })
   }
 
   render() {
