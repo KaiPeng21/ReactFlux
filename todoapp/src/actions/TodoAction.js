@@ -6,6 +6,17 @@
 import * as TodoConstants from '../constants/TodoConstants';
 import dispatcher from '../dispatchers/dispatcher';
 
+//#region Actions for changing the new task textbox
+export function editNewTaskAction(value){
+
+    dispatcher.dispatch({
+        type : TodoConstants.EDIT_NEWTASK,
+        value : value
+    })
+}
+//#endregion
+
+//#region Actions for changing the todo-list
 export function createTodoAction(content){
 
     dispatcher.dispatch({
@@ -32,3 +43,4 @@ export function completeTodoAction(id){
         complete : true
     })
 }
+//#endregion

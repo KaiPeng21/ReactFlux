@@ -12,7 +12,9 @@ import * as TodoAction from './actions/TodoAction';
 // components
 import EnterField from './components/EnterField';
 import TodoList from './components/TodoList';
+
 //#endregion
+
 
 class App extends Component {
 
@@ -20,23 +22,29 @@ class App extends Component {
   constructor(props){
     super(props)
 
+    // states are initialized from STOREs
     this.state = {
-      newEvent : '',
-      todolist : TodoStore.getAll()
+      newTask : TodoStore.getNewTask(),
+      todolist : TodoStore.getTodoList()
     }
     
-    // bind methods for STOREs
-    this.getTodoList = this.getTodoList.bind(this)
-
     // bind methods for ACTIONs
-    this.createToDo = this.createToDo.bind(this)
+    this.actionEditNewTask = this.actionEditNewTask.bind(this)
+    this.actionCreateToDo = this.actionCreateTodo.bind(this)
+
+    // bind methods for STOREs
+    this.storeSetTodoList = this.storeSetTodoList.bind(this)
+    this.storeSetNewTask = this.storeSetNewTask.bind(this)
   }  
   //#endregion
 
 
   //#region Method for ACTIONS 
   //        event tells ACTION to dispatch state variables 
-  createToDo(content){
+  actionEditNewTask(value){
+    TodoAction.editNewTaskAction(value);
+  }
+  actionCreateTodo(content){
     TodoAction.createTodoAction(content);
   }
   //#endregion
@@ -44,9 +52,14 @@ class App extends Component {
 
   //#region Method for STORES 
   //        enable STORE to change state variables
-  getTodoList(){
+  storeSetNewTask(){
     this.setState({
-      todolist : TodoStore.getAll()
+      newTask : TodoStore.getNewTask()
+    })
+  }
+  storeSetTodoList(){
+    this.setState({
+      todolist : TodoStore.getTodoList()
     })
   }
   //#endregion
@@ -55,11 +68,13 @@ class App extends Component {
   //#region React Life Cycles 
   //        where STORE changes the state variables
   componentDidMount(){
-    TodoStore.on("change", this.getTodoList)
+    TodoStore.on("change", this.storeSetNewTask)
+    TodoStore.on("change", this.storeSetTodoList)
   }
 
   componentWillUnmount(){
-    TodoStore.removeListener("change", this.getTodoList)
+    TodoStore.removeListener("change", this.storeSetNewTask)
+    TodoStore.removeListener("change", this.storeSetTodoList)
   }
   //#endregion
 
@@ -73,8 +88,8 @@ class App extends Component {
         <h1>Todos </h1>
         <TodoList todolist={todolist}/>
         <EnterField />
-        <input type='text' placeholder='testing todo' value={this.state.newEvent} onChange={(e) => this.setState({newEvent : e.target.value})}/>
-        <button onClick={() => this.createToDo(this.state.newEvent)}>TEST CREATE TODO</button>
+        <input type='text' placeholder='testing todo' value={this.state.newTask} onChange={(e) => this.actionEditNewTask(e.target.value)}/>
+        <button onClick={() => this.actionCreateTodo(this.state.newTask)}>TEST CREATE TODO</button>
       </div>
     );
   }
