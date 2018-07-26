@@ -100,5 +100,6 @@ class App extends Component {
   //#endregion
 }
 
+window.onload = new App().actionReloadTodo()
 
 export default App;

@@ -70,3 +70,8 @@ export function completeTodoAction(id){
     }).catch((error) => console.log(error))
 }
 //#endregion
+
+window.createTodoAction = createTodoAction;
+window.reloadTodoAction = reloadTodoAction;
+window.deleteTodoAction = deleteTodoAction;
+window.completeTodoAction = completeTodoAction;

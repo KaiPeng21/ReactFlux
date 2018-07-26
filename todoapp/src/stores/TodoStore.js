@@ -107,7 +107,6 @@ class TodoStore extends EventEmitter{
                 this.editNewTask(actions.value)
                 break
             case TodoConstant.RELOAD_TODO:
-                console.log(actions.todo)
                 this.reloadTodo(actions.todo)
                 break
             case TodoConstant.CREATE_TODO:
