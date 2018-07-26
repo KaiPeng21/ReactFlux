@@ -19,8 +19,7 @@ class TodoStore extends EventEmitter{
     constructor(){
         super()
         this.newtask = ''
-        this.todolist = [{id : 0, content : 'testing react', complete : true}, {id : 1, content : 'create stores for holding states', complete : false}]
-    
+        this.todolist = []
         // bind the action handle
         this.handleActions = this.handleActions.bind(this)
     }
@@ -38,6 +37,13 @@ class TodoStore extends EventEmitter{
 
 
     //#region Store Methods for updating todo-list
+    // reload todo
+    reloadTodo(todo){
+        this.todolist = todo
+
+        this.emit("change")
+    }
+
     // add new element to todolist state
     createTodo(id, content, complete){
 
@@ -99,6 +105,10 @@ class TodoStore extends EventEmitter{
         switch (actions.type){
             case TodoConstant.EDIT_NEWTASK:
                 this.editNewTask(actions.value)
+                break
+            case TodoConstant.RELOAD_TODO:
+                console.log(actions.todo)
+                this.reloadTodo(actions.todo)
                 break
             case TodoConstant.CREATE_TODO:
                 this.createTodo(actions.id, actions.content, actions.complete)

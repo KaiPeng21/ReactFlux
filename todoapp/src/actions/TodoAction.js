@@ -6,6 +6,8 @@
 import * as TodoConstants from '../constants/TodoConstants';
 import dispatcher from '../dispatchers/dispatcher';
 
+import * as TodoSDK from '../utils/TodoSDK';
+
 //#region Actions for changing the new task textbox
 export function editNewTaskAction(value){
 
@@ -17,30 +19,54 @@ export function editNewTaskAction(value){
 //#endregion
 
 //#region Actions for changing the todo-list
+export function reloadTodoAction(){
+
+    TodoSDK.getAllTodoPromise().then((val) => {
+        dispatcher.dispatch({
+            type : TodoConstants.RELOAD_TODO,
+            todo : val
+        })
+    }).catch(error => console.log(error))
+
+}
+
 export function createTodoAction(content){
 
-    dispatcher.dispatch({
-        type : TodoConstants.CREATE_TODO,
-        id : Date.now(),
-        content : content,
-        complete : false
-    })
+    TodoSDK.createTodoPromise(content).then((val) => {
+        if (val.success){
+            dispatcher.dispatch({
+                type : TodoConstants.CREATE_TODO,
+                id : val.id,
+                content : content,
+                complete : false
+            })
+        }
+    }).catch(error => console.log(error))
 }
 
 export function deleteTodoAction(id){
 
-    dispatcher.dispatch({
-        type : TodoConstants.DELETE_TODO,
-        id : id
-    })
+    TodoSDK.deleteTodoPromise(id).then((val) => {
+        if (val.success){
+            dispatcher.dispatch({
+                type : TodoConstants.DELETE_TODO,
+                id : id
+            })
+        }
+    }).catch((error) => console.log(error))
 }
 
 export function completeTodoAction(id){
 
-    dispatcher.dispatch({
-        type : TodoConstants.UPDATE_TODO_COMPLETE,
-        id : id,
-        complete : true
-    })
+
+    TodoSDK.completeTodoPromise(id).then((val) => {
+        if (val.success){
+            dispatcher.dispatch({
+                type : TodoConstants.UPDATE_TODO_COMPLETE,
+                id : id,
+                complete : true
+            })
+        }
+    }).catch((error) => console.log(error))
 }
 //#endregion

@@ -28,7 +28,7 @@ def api():
         try:
             todoListState[len(todoListState)] = {'id' : len(todoListState), 'content' : recieve['content'], 'complete' : recieve['complete']}
 
-            return jsonify({'success' : True})
+            return jsonify({'success' : True, 'id' : len(todoListState)})
         except Exception as ex:
             print(ex)
             return jsonify({'success' : False})

@@ -29,6 +29,7 @@ class App extends Component {
     }
     
     // bind methods for ACTIONs
+    this.actionReloadTodo = this.actionReloadTodo.bind(this)
     this.actionEditNewTask = this.actionEditNewTask.bind(this)
     this.actionCreateToDo = this.actionCreateTodo.bind(this)
 
@@ -41,6 +42,9 @@ class App extends Component {
 
   //#region Method for ACTIONS 
   //        event tells ACTION to dispatch state variables 
+  actionReloadTodo(){
+    TodoAction.reloadTodoAction();
+  }
   actionEditNewTask(value){
     TodoAction.editNewTaskAction(value);
   }
@@ -95,5 +99,6 @@ class App extends Component {
   }
   //#endregion
 }
+
 
 export default App;

@@ -6,6 +6,7 @@ export const EDIT_NEWTASK = "EDIT_NEWTASK";
 //#endregion
 
 //#region Constants for changing todo-list
+export const RELOAD_TODO = "RELOAD_TODO";
 export const CREATE_TODO = "CREATE_TODO";
 export const UPDATE_TODO = "UPDATE_TODO";
 export const UPDATE_TODO_COMPLETE = "UPDATE_TODO_COMPLETE";
