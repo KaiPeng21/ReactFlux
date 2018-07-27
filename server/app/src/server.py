@@ -3,13 +3,14 @@
 # Server End Point: http://localhost:5000/api
 
 from flask import Flask, jsonify, request
+import uuid
 
 app = Flask(__name__)
 
 # Fake Database
 todoListState = {
-    0 : {'id' : 0, 'content' : 'learning react', 'complete' : True}, 
-    1 : {'id' : 1, 'content' : 'learning flux', 'complete' : False}
+    '0' : {'id' : '0', 'content' : 'learning react', 'complete' : True}, 
+    '1' : {'id' : '1', 'content' : 'learning flux', 'complete' : False}
     } # default values in json list
 
 # Testing
@@ -25,10 +26,12 @@ def api():
     if request.method == 'POST':
         recieve = request.get_json()
 
-        try:
-            todoListState[len(todoListState)] = {'id' : len(todoListState), 'content' : recieve['content'], 'complete' : recieve['complete']}
+        uid = uuid.uuid4().hex
 
-            return jsonify({'success' : True, 'id' : len(todoListState)})
+        try:
+            todoListState[uid] = {'id' : uid, 'content' : recieve['content'], 'complete' : recieve['complete']}
+
+            return jsonify({'success' : True, 'id' : uid})
         except Exception as ex:
             print(ex)
             return jsonify({'success' : False})

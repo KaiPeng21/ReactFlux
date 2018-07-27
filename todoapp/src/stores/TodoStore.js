@@ -67,7 +67,7 @@ class TodoStore extends EventEmitter{
     }
 
     // change the complete status and the content in the todolist state
-    updateTodo(id, content, complete){
+    updateTodoContent(id, content, complete){
 
         const ref = this.todolist.filter((val) => val.id === id)[0]
         ref.complete = complete
@@ -116,7 +116,7 @@ class TodoStore extends EventEmitter{
                 this.updateTodo(actions.id, actions.complete)
                 break
             case TodoConstant.UPDATE_TODO:
-                this.updateTodo(actions.id, actions.content, actions.complete)
+                this.updateTodoContent(actions.id, actions.content, actions.complete)
                 break
             case TodoConstant.DELETE_TODO:
                 this.deleteTodo(actions.id)

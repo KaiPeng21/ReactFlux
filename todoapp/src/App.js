@@ -32,6 +32,8 @@ class App extends Component {
     this.actionReloadTodo = this.actionReloadTodo.bind(this)
     this.actionEditNewTask = this.actionEditNewTask.bind(this)
     this.actionCreateToDo = this.actionCreateTodo.bind(this)
+    this.actionDeleteTodo = this.actionDeleteTodo.bind(this)
+    this.actionCompleteTodo = this.actionCompleteTodo.bind(this)
 
     // bind methods for STOREs
     this.storeSetTodoList = this.storeSetTodoList.bind(this)
@@ -43,13 +45,19 @@ class App extends Component {
   //#region Method for ACTIONS 
   //        event tells ACTION to dispatch state variables 
   actionReloadTodo(){
-    TodoAction.reloadTodoAction();
+    TodoAction.reloadTodoAction()
   }
   actionEditNewTask(value){
-    TodoAction.editNewTaskAction(value);
+    TodoAction.editNewTaskAction(value)
   }
   actionCreateTodo(content){
-    TodoAction.createTodoAction(content);
+    TodoAction.createTodoAction(content)
+  }
+  actionDeleteTodo(id){
+    TodoAction.deleteTodoAction(id)
+  }
+  actionCompleteTodo(id){
+    TodoAction.completeTodoAction(id)
   }
   //#endregion
 
@@ -90,10 +98,9 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Todos </h1>
-        <TodoList todolist={todolist}/>
-        <EnterField />
-        <input type='text' placeholder='testing todo' value={this.state.newTask} onChange={(e) => this.actionEditNewTask(e.target.value)}/>
-        <button onClick={() => this.actionCreateTodo(this.state.newTask)}>TEST CREATE TODO</button>
+        <TodoList title='Incomplete List' todolist={todolist.filter((val) => !val.complete)} removeTodo={this.actionDeleteTodo} completeTodo={this.actionCompleteTodo}/>
+        <EnterField createTodo={this.actionCreateTodo} newTask={this.state.newTask} editNewTask={this.actionEditNewTask}/>
+        <TodoList title='Complete List' todolist={todolist.filter((val) => val.complete)} removeTodo={this.actionDeleteTodo} completeTodo={this.actionCompleteTodo}/>
       </div>
     );
   }
